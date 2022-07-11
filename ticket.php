@@ -44,11 +44,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') :
     $json = file_get_contents('php://input');
     //décodage du format json, ça génère un obect php
     $objectPOST = json_decode($json);
-    $sql = sprintf("INSERT INTO ticket_user SET tag='%s', message='%s', id_user='%s'",
+    $sql = sprintf("INSERT INTO ticket SET tag='%s', `message`='%s', id_user='%s', date='%s'",
         strip_tags($objectPOST->tag),//lire une propriété d'un objet PHP
-        strip_tags($objectPOST->message),
-        strip_tags($objectPOST->id_user)
+        strip_tags(addslashes($objectPOST->message)),
+        strip_tags($objectPOST->id_user),
+        //1,
+        date('Y-m-d')
 );
+    $response['sql'] = $sql;
     $connect->query($sql);
     echo $connect->error;
     $response['response'] = "Ajout d'un ticket";
@@ -57,6 +60,7 @@ endif; //END POST
 
 
 
+// 
 //  // ------------------- Method PUT ----------------------
 // if($_SERVER['REQUEST_METHOD'] == 'PUT') :
 //     //extraction de l'obect json du paquet HTTP

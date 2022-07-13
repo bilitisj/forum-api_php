@@ -25,11 +25,11 @@ endif; // END GET
  // ------------------- Method DELETE ----------------------
 if($_SERVER['REQUEST_METHOD'] == 'DELETE') :
     if( isset($_GET['id_ticket'])) :
-    $sql = sprintf("DELETE FROM ticket_user WHERE id_ticket=%d",
+    $sql = sprintf("DELETE FROM ticket WHERE id_ticket=%d",
             $_GET['id_ticket']);
         $connect->query($sql);
     echo $connect->error;
-    $response['response'] = "Suppresion d'un ticket" . $_GET['id_ticket'];
+    $response['response'] = "Suppresion du ticket " . $_GET['id_ticket'];
     else : 
         $response['response'] = "il manque l'id";
         $response['code'] = 500;
